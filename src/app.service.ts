@@ -13,7 +13,7 @@ export class AppService {
     const users = await this.connection.collection('users').find({}).toArray();
 
     return {
-      message: 'Users!',
+      message: 'Users all from DB!',
       users,
     };
   }
