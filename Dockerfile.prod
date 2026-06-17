@@ -1,0 +1,32 @@
+# layers
+# First stage: building (TS --> JS)
+From node:24-alpine AS builder
+
+# create folder
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci
+
+# src(Local Machine) --> dest(Docker Container)
+COPY . .
+
+RUN npm run build
+# dist folder existed /app
+
+# Second stage Production
+FROM node:24-alpine AS Runner
+
+WORKDIR /app
+
+COPY package*.json .
+
+RUN npm ci --omit=dev
+
+COPY --from=builder /app/dist ./dist
+
+EXPOSE 3000
+
+CMD [ "node", "dist/main.js" ]
+
