@@ -13,7 +13,7 @@ describe('AppController', () => {
           provide: AppService,
           useValue: {
             getUsers: jest.fn().mockResolvedValue({
-              message: 'Users all from DB!',
+              message: 'Users!',
               users: [{ name: 'Aya' }, { name: 'Ahmed' }],
             }),
           },
